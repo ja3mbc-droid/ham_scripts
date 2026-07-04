@@ -31,7 +31,3 @@ if ! pgrep -f MailQSL.exe > /dev/null; then
 else
     echo "⚠️  MailQSL 起動済み"
 fi
-
-# Hamlog起動
-wine ~/.wine/drive_c/Hamlog/Hamlogw.exe &
-echo "✅ Hamlog起動完了"

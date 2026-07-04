@@ -4,6 +4,10 @@ echo "FreeDVモード停止中..."
 # FreeDV停止
 ps aux | grep -w freedv | grep -v grep | awk '{print $2}' | xargs -r kill -9
 
+# FD_Linker停止
+ps aux | grep -i "FD_Linker" | grep -v grep | awk '{print $2}' | xargs -r kill -9
+echo "✅ FD_Linker停止完了"
+
 # flrig停止
 ps aux | grep -w flrig | grep -v grep | awk '{print $2}' | xargs -r kill -9
 
