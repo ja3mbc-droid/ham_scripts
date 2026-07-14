@@ -1,5 +1,7 @@
 #!/bin/bash
+
 echo "FreeDVモード起動中..."
+
 # flrig起動
 if ! pgrep flrig > /dev/null; then
     flrig &
@@ -8,6 +10,11 @@ if ! pgrep flrig > /dev/null; then
 else
     echo "⚠️ flrig起動済み"
 fi
+
+# HAMLOG起動
+~/hamlog_start.sh
+sleep 5
+
 # FD Linker起動
 if ! pgrep -f FD_Linker_LIsten_Ver221.exe > /dev/null; then
     WINEPREFIX=~/.wine wine ~/.wine/drive_c/FD_Linker/FD_linker_Ver2.2.1/FD_Linker_Listen/FD_Linker_LIsten_Ver221.exe &
@@ -16,18 +23,22 @@ if ! pgrep -f FD_Linker_LIsten_Ver221.exe > /dev/null; then
 else
     echo "⚠️ FD Linker起動済み"
 fi
-# hamlog_gui 起動
-cd ~/hamlog_gui
-cargo run &
-echo "✅ hamlog_gui 起動完了"
-# オーディオ設定修正してからFreeDV起動
+
+# オーディオ設定修正
 ~/freedv_audio_fix.sh
-freedv &
-echo "✅ FreeDV起動完了"
+
+# FreeDV起動
+if ! pgrep -x freedv > /dev/null; then
+    freedv &
+    echo "✅ FreeDV起動完了"
+else
+    echo "⚠️ FreeDV起動済み"
+fi
+
 # MailQSL起動
 if ! pgrep -f MailQSL.exe > /dev/null; then
     WINEPREFIX=~/.wine wine ~/.wine/drive_c/Hamlog/MailQSL.exe &
     echo "✅ MailQSL 起動完了"
 else
-    echo "⚠️  MailQSL 起動済み"
+    echo "⚠️ MailQSL 起動済み"
 fi
